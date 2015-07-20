@@ -1,30 +1,27 @@
 bin/rails generate controller events
-app/controllers/aevents_controller.rb
+app/controllers/events_controller.rb
+
 class EventsController < ApplicationController
+  def show
+    @event = Event.find(params[:id])
+  end
+
   def new
   end
   
-   def create
+  def create
+  @event = Event.new(params[:event])
+ 
+  @event.save
+  redirect_to @event
+end
+
+private
+  def event_params
+    params.require(:event).permit(:title, :text)
   end
 end
-
 end
-app/views/events/new.html.erb
-<h1>New Event</h1>
-<%= form_for :event, url: events_path do |f| %>
 
-  <p>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </p>
- 
-  <p>
-    <%= f.label :text %><br>
-    <%= f.text_area :text %>
-  </p>
- 
-  <p>
-    <%= f.submit %>
-  </p>
-<% end %>
+
 
